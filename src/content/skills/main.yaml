@@ -1,0 +1,60 @@
+# PENDIENTE REVISION DEL DUEÑO — los syncRate son estimaciones del agente SCRIBE
+# basadas en el CV del PDF (peso del rol, antigüedad, profundidad declarada).
+# El dueño confirma o ajusta antes de mergear el PR.
+pendingOwnerReview: true
+categories:
+  - id: "languages-frameworks"
+    label:
+      es: "ARMAMENTO PRINCIPAL"
+      en: "PRIMARY ARMAMENT"
+    items:
+      - { name: "PHP / Laravel", syncRate: 92, years: 3 }
+      - { name: "JavaScript / TypeScript (Node.js, NestJS, Express)", syncRate: 82, years: 3 }
+      - { name: "Python (Django, FastAPI)", syncRate: 72, years: 1 }
+      - { name: "C# / .NET", syncRate: 65, years: 1 }
+      - { name: "Go", syncRate: 48, years: 1 }
+  - id: "databases"
+    label:
+      es: "INTELIGENCIA DE DATOS"
+      en: "DATA INTELLIGENCE"
+    items:
+      - { name: "SQL Server (T-SQL, stored procedures, vistas, funciones)", syncRate: 88, years: 3 }
+      - { name: "MySQL", syncRate: 78, years: 3 }
+      - { name: "PostgreSQL", syncRate: 70, years: 2 }
+      - { name: "MongoDB", syncRate: 60, years: 1 }
+      - { name: "Redis", syncRate: 58, years: 1 }
+  - id: "ai-automation"
+    label:
+      es: "DIVISION DE IA Y AUTOMATIZACION"
+      en: "AI & AUTOMATION DIVISION"
+    items:
+      - { name: "APIs de IA (Anthropic Claude, OpenAI)", syncRate: 80, years: 1 }
+      - { name: "Tool Calling / Agentic", syncRate: 78, years: 1 }
+      - { name: "Twilio / WhatsApp Bots", syncRate: 65, years: 1 }
+  - id: "messaging-async"
+    label:
+      es: "TRANSMISION ASINCRONA"
+      en: "ASYNC TRANSMISSION"
+    items:
+      - { name: "RabbitMQ", syncRate: 72, years: 1 }
+      - { name: "Arquitectura orientada a eventos", syncRate: 70, years: 1 }
+      - { name: "WebSockets", syncRate: 78, years: 2 }
+      - { name: "Procesamiento asíncrono", syncRate: 75, years: 2 }
+  - id: "devops-tooling"
+    label:
+      es: "EQUIPAMIENTO TACTICO"
+      en: "TACTICAL EQUIPMENT"
+    items:
+      - { name: "Docker", syncRate: 70, years: 2 }
+      - { name: "Git (GitHub, GitLab, Bitbucket)", syncRate: 88, years: 3 }
+      - { name: "AWS (EC2, S3, RDS, DynamoDB)", syncRate: 70, years: 1 }
+      - { name: "Azure", syncRate: 65, years: 2 }
+  - id: "architecture"
+    label:
+      es: "DOCTRINA ARQUITECTONICA"
+      en: "ARCHITECTURAL DOCTRINE"
+    items:
+      - { name: "Clean Code / SOLID", syncRate: 85, years: 3 }
+      - { name: "Domain Driven Design", syncRate: 72, years: 1 }
+      - { name: "Repository-Service-Controller", syncRate: 82, years: 3 }
+      - { name: "APIs REST escalables", syncRate: 85, years: 3 }
