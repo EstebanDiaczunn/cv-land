@@ -1,0 +1,62 @@
+---
+/**
+ * SiteFooter.astro
+ * Minimal Fase 1 footer per SPEC §8 / DESIGN_SYSTEM.md §4.2.
+ * Build-hash and ScanLines toggle land in Fase 4 polish.
+ */
+
+const buildYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-row">
+    <span class="footer-state">
+      <span class="footer-dot" aria-hidden="true"></span>
+      <span>END OF TRANSMISSION</span>
+    </span>
+    <span class="footer-meta">
+      NERV / cv-land · {buildYear}
+    </span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-20);
+    border-top: 1px solid var(--border-subtle);
+    padding: var(--space-6) clamp(var(--space-4), 4vw, var(--space-12));
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    max-width: 1280px;
+    margin-inline: auto;
+    flex-wrap: wrap;
+  }
+
+  .footer-state {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-amber);
+  }
+
+  .footer-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-amber);
+    box-shadow: 0 0 6px var(--accent-amber-glow);
+  }
+
+  .footer-meta {
+    color: var(--text-muted);
+  }
+</style>

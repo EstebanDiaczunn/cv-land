@@ -1,0 +1,66 @@
+/* animations.css — cv-land
+ * Source of truth: docs/DESIGN_SYSTEM.md §3
+ * Keyframes used across components. Imported globally from globals.css.
+ * Components consume motion tokens from tokens.css (--duration-*, --ease-*).
+ */
+
+/* Generic fade-in. Used by overlays and section reveals. */
+@keyframes nerv-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Generic fade-out. Used by BootSequence dismissal. */
+@keyframes nerv-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Boot line reveal: gentle drop + fade. Each line consumes its own delay
+ * via inline style --line-delay. */
+@keyframes nerv-boot-line {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Soft pulse for the skip hint and the ONLINE indicator. Low amplitude
+ * so it does not feel like a flashing alert. */
+@keyframes nerv-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+/* Terminal cursor blink. steps(1) keeps it sharp, no fade. */
+@keyframes nerv-cursor-blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Hero accent reveal: tracking-in on letter-spacing for the codename line.
+ * Used once on initial page mount after boot dismisses. */
+@keyframes nerv-hero-track-in {
+  from {
+    opacity: 0;
+    letter-spacing: 0.4em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* Reduced motion: collapse all custom NERV animations to instant.
+ * Tailwind/global resets handle generic transitions; this targets ours. */
+@media (prefers-reduced-motion: reduce) {
+  .boot-sequence,
+  .boot-sequence * {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

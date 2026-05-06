@@ -1,14 +1,20 @@
 ---
 import "../styles/globals.css";
+import BootSequence from "../components/BootSequence.astro";
+import StatusHeader from "../components/StatusHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title?: string;
   description?: string;
+  /** Set to false on pages that should not show the boot overlay (e.g. 404). */
+  showBoot?: boolean;
 }
 
 const {
   title = "ESTEBAN DIACZUNN — CODENAME: NAIKI",
   description = "Backend Developer / Software Architect-in-training. Operative profile.",
+  showBoot = true,
 } = Astro.props;
 
 const siteUrl = import.meta.env.SITE;
@@ -24,20 +30,20 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <title>{title}</title>
     <meta name="description" content={description} />
 
-    <!-- Canonical -->
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content="NAIKI — cv-land" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="bg-bg-void text-text-primary font-sans antialiased min-h-screen">
+  <body class="bg-bg-void text-text-primary font-sans antialiased min-h-screen flex flex-col">
+    {showBoot && <BootSequence />}
+    <StatusHeader />
     <slot />
+    <SiteFooter />
   </body>
 </html>
