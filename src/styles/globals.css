@@ -1,0 +1,65 @@
+/*
+ * globals.css — cv-land
+ *
+ * TOKEN STRATEGY (decision documented here):
+ * We keep two layers:
+ *   1. Raw CSS custom properties in tokens.css (--bg-void, --accent-amber, etc.)
+ *      for direct CSS usage (e.g., var(--accent-amber) in component styles).
+ *   2. A @theme block below that maps those same values into Tailwind v4's
+ *      design token system, using the --color-* prefix that Tailwind expects.
+ *      This makes utilities like bg-bg-void, text-text-primary, border-border-subtle work.
+ *
+ * We do NOT rename tokens.css variables to --color-* to avoid breaking
+ * any direct CSS var() usage that would need to reference --bg-void etc.
+ * The @theme block provides both aliases, so both layers work simultaneously.
+ *
+ * Font strategy: @fontsource packages are imported here. Vite/Astro will
+ * bundle the WOFF2 files into dist/_astro/ at build time — fully self-hosted,
+ * no CDN calls. font-display: swap is handled by the @fontsource packages.
+ */
+
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Self-hosted fonts via @fontsource — bundled by Vite at build time */
+@import "@fontsource-variable/oswald";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource/noto-sans-jp/900.css";
+
+/* --- Tailwind v4 theme mapping --- */
+@theme {
+  /* Color tokens */
+  --color-bg-void:     #0a0a0a;
+  --color-bg-panel:    #141414;
+  --color-bg-elevated: #1c1c1c;
+
+  --color-border-subtle: #2a2a2a;
+  --color-border-strong: #3d3d3d;
+
+  --color-accent-amber:      #ff6600;
+  --color-accent-amber-soft: #cc5200;
+  --color-accent-amber-glow: #ff661a;
+  --color-alarm-red:         #d62121;
+  --color-alarm-red-glow:    #ff3030;
+
+  --color-text-primary:   #f5f5f5;
+  --color-text-secondary: #a8a8a8;
+  --color-text-muted:     #6e6e6e;
+  --color-text-amber:     #ff8800;
+
+  --color-magi-green: #00ff88;
+
+  /* Font families */
+  --font-display: "Oswald Variable", sans-serif;
+  --font-sans:    "Inter Variable", sans-serif;
+  --font-mono:    "JetBrains Mono Variable", monospace;
+  --font-jp:      "Noto Sans JP", sans-serif;
+}
+
+/* --- Global base styles --- */
+:focus-visible {
+  outline: 2px solid var(--accent-amber);
+  outline-offset: 2px;
+  border-radius: 0;
+}

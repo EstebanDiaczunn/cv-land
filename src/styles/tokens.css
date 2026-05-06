@@ -1,0 +1,92 @@
+/* tokens.css — cv-land design system tokens
+ * Source of truth: docs/DESIGN_SYSTEM.md §1
+ * These raw CSS custom properties are used directly in CSS.
+ * Tailwind v4 picks them up via the @theme block in globals.css.
+ */
+
+:root {
+  /* --- Fondos --- */
+  --bg-void: #0a0a0a;        /* Fondo global. Negro casi absoluto. No usar #000 puro. */
+  --bg-panel: #141414;       /* Contenedores de paneles y cards. */
+  --bg-elevated: #1c1c1c;    /* Elementos encima de paneles: inputs, hover states. */
+
+  /* --- Bordes --- */
+  --border-subtle: #2a2a2a;  /* Separadores de baja jerarquia, hex grid. */
+  --border-strong: #3d3d3d;  /* Bordes de paneles, dividers. */
+
+  /* --- Identidad NERV (acentos) --- */
+  --accent-amber: #ff6600;       /* Accent principal. Headers, labels, fills activos. */
+  --accent-amber-soft: #cc5200;  /* Hover state de amber en fondos oscuros. */
+  --accent-amber-glow: #ff661a;  /* Para box-shadow / glow de elementos amber. */
+  --alarm-red: #d62121;          /* Solo alertas, CLASSIFIED, clearance bajo. Usar con cautela. */
+  --alarm-red-glow: #ff3030;     /* Glow de alarm-red para badges criticos. */
+
+  /* --- Texto --- */
+  --text-primary: #f5f5f5;   /* Prosa del CV, contenido principal. No #fff puro. */
+  --text-secondary: #a8a8a8; /* Fechas, sublabels, metadata secundaria. */
+  --text-muted: #6e6e6e;     /* Notas, hints, stack chips. Evitar en texto de cuerpo chico. */
+  --text-amber: #ff8800;     /* Labels de status, nombres de seccion en contexto de datos. */
+
+  /* --- Especiales --- */
+  --magi-green: #00ff88;              /* Terminales secundarios, STATUS: ONLINE, boot lines. */
+  --scan-overlay: rgba(255,102,0,.03);/* Overlay de scan lines CRT. */
+
+  /* --- Spacing (base 8px) --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* --- Border radius (NERV is sharp — default 0) --- */
+  --radius-none: 0px;
+  --radius-chip: 2px;  /* UNICA excepcion: chips de stack y badges pequenos */
+  --radius-sm:   4px;  /* Reservado — usar solo con aprobacion explicita */
+
+  /* --- Z-index scale --- */
+  --z-hex-grid:  0;
+  --z-content:   1;
+  --z-elevated:  10;
+  --z-sticky:    20;
+  --z-overlay:   50;
+  --z-boot:      100;
+
+  /* --- Opacidad para decoracion japonesa --- */
+  --opacity-jp-min: 0.04;
+  --opacity-jp-max: 0.08;
+
+  /* --- Motion tokens --- */
+  --duration-instant:  0ms;
+  --duration-fast:     150ms;
+  --duration-medium:   300ms;
+  --duration-slow:     600ms;
+  --duration-boot-max: 5000ms;
+
+  --ease-out:      cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-terminal: steps(1, end);
+
+  /* --- Typography scale --- */
+  --text-hero:   clamp(2.5rem, 6vw, 4.5rem);
+  --text-h1:     clamp(2rem, 4.5vw, 3rem);
+  --text-h2:     clamp(1.5rem, 3vw, 2rem);
+  --text-h3:     clamp(1.25rem, 2.5vw, 1.5rem);
+  --text-h4:     clamp(1rem, 2vw, 1.25rem);
+  --text-h5:     1rem;
+  --text-h6:     0.875rem;
+  --text-base:   1rem;
+  --text-sm:     0.875rem;
+  --text-xs:     0.75rem;
+  --text-xxs:    0.6875rem;
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.6;
+}

@@ -7,6 +7,14 @@
 
 ---
 
+> **STATUS (2026-05-06): decisiones D1-D6 resueltas.** Ver `CLAUDE.md` para los valores definitivos.
+> Notas clave que sobreescriben este documento:
+> - **D5 — codename del proyecto: `cv-land`** (no `magi`). Donde §4 y otras partes digan `magi/`, leer `cv-land/`. `MagiPanel` se mantiene como nombre de componente UI por la metáfora visual.
+> - **D1 — identidad principal**: `ESTEBAN DIACZUNN` arriba, `CODENAME: NAIKI` debajo (invierte el default del §2).
+> - **Scope textual**: el chrome de UI usa veneer NERV (labels, badges, status); el contenido bajo cada header es **literal del CV**, no se reescribe. Esto sobreescribe los ejemplos de §7.3 que mostraban headers `## Operational Summary (EN)` forzados en el body MDX. Detalle en `docs/CONTENT_TRANSLATION.md` §1.
+
+---
+
 ## 0. Contexto rápido para el agente
 
 Esto es un sitio web personal estático: una landing-CV con estética **NERV / Evangelion**, bilingüe (ES/EN), pensada como *palate cleanser* visual para el dueño y como pieza de marca para recruiters y comunidad dev.

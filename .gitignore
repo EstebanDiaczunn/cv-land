@@ -8,27 +8,36 @@
 # testing
 /coverage
 
-# next.js
+# next.js (legacy entries kept for safety)
 /.next/
 /out/
 
 # production
 /build
 
+# astro build output
+dist/
+
+# astro generated types
+.astro/
+
 # misc
 .DS_Store
 *.pem
+.idea/
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # local env files
 .env*.local
 .env
+.env.production
 
-# vercel
+# vercel (not used — deploy via VPS + nginx)
 .vercel
 
 # typescript
