@@ -22,11 +22,14 @@
 @import "./tokens.css";
 @import "./animations.css";
 
-/* Self-hosted fonts via @fontsource — bundled by Vite at build time */
+/* Self-hosted fonts via @fontsource — bundled by Vite at build time.
+ * Noto Sans JP intentionally NOT bundled: japonés decorativo (D2) aún
+ * no implementado. Cuando se agreguen kanji/katakana ornamentales
+ * (HexGrid section labels / katakana dividers), traer un subset cerrado
+ * con sólo los glifos usados, no el paquete completo. */
 @import "@fontsource-variable/oswald";
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
-@import "@fontsource/noto-sans-jp/900.css";
 
 /* --- Tailwind v4 theme mapping --- */
 @theme {
@@ -55,7 +58,6 @@
   --font-display: "Oswald Variable", sans-serif;
   --font-sans:    "Inter Variable", sans-serif;
   --font-mono:    "JetBrains Mono Variable", monospace;
-  --font-jp:      "Noto Sans JP", sans-serif;
 }
 
 /* --- Global base styles --- */

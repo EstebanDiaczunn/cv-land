@@ -58,10 +58,6 @@
   --z-overlay:   50;
   --z-boot:      100;
 
-  /* --- Opacidad para decoracion japonesa --- */
-  --opacity-jp-min: 0.04;
-  --opacity-jp-max: 0.08;
-
   /* --- Motion tokens --- */
   --duration-instant:  0ms;
   --duration-fast:     150ms;

@@ -17,9 +17,6 @@ importers:
       '@fontsource-variable/oswald':
         specifier: ^5.2.8
         version: 5.2.8
-      '@fontsource/noto-sans-jp':
-        specifier: ^5.2.9
-        version: 5.2.9
       '@tailwindcss/vite':
         specifier: ^4.2.4
         version: 4.2.4(vite@7.3.2(jiti@2.7.0)(lightningcss@1.32.0))
@@ -245,9 +242,6 @@ packages:
 
   '@fontsource-variable/oswald@5.2.8':
     resolution: {integrity: sha512-sIXwfKbyHOATgBWOlpR73VMQ8pA8XCToiyy6sL02ZfYEZPpW18TLtpxPBpYXId7xKbWCousOTzlJsa/9rTd8WQ==}
-
-  '@fontsource/noto-sans-jp@5.2.9':
-    resolution: {integrity: sha512-6yVGiofnrnbiJjU8ch4JGSs2HqyozxMvsVyVmFwOnDH3u//qQKLqmKM4n0lqN0637uaJNzUW9nIJqbbMgHVQzw==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -1817,8 +1811,6 @@ snapshots:
   '@fontsource-variable/jetbrains-mono@5.2.8': {}
 
   '@fontsource-variable/oswald@5.2.8': {}
-
-  '@fontsource/noto-sans-jp@5.2.9': {}
 
   '@img/colour@1.1.0':
     optional: true
