@@ -1,0 +1,84 @@
+---
+/**
+ * LangToggle.astro
+ * Bilingual segmented control. Active lang is a non-link span (with
+ * `aria-current="page"`); inactive lang is an <a href={altHref}>.
+ *
+ * Without JS the toggle still works as plain navigation. The inline
+ * script (~150 B) just persists the user's choice to localStorage
+ * under `cv-land:lang` so future enhancements (preference-aware nav)
+ * can read it. We do NOT auto-redirect on visit — URL is authoritative
+ * (SPEC §3, no Accept-Language since the site is 100% static).
+ */
+import type { Lang } from "../lib/i18n.ts";
+
+interface Props {
+  lang: Lang;
+  altHref: string;
+}
+
+const { lang, altHref } = Astro.props;
+---
+
+<nav class="lang-toggle" aria-label="Language selection">
+  {lang === "es" ? (
+    <span class="lang lang-active" aria-current="page" data-lang="es">ES</span>
+  ) : (
+    <a class="lang" href={altHref} data-lang="es">ES</a>
+  )}
+  <span class="lang-sep" aria-hidden="true">/</span>
+  {lang === "en" ? (
+    <span class="lang lang-active" aria-current="page" data-lang="en">EN</span>
+  ) : (
+    <a class="lang" href={altHref} data-lang="en">EN</a>
+  )}
+</nav>
+
+<script is:inline>
+  (function () {
+    var KEY = "cv-land:lang";
+    document.querySelectorAll("[data-lang]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        try {
+          localStorage.setItem(KEY, el.getAttribute("data-lang"));
+        } catch (e) {}
+      });
+    });
+  })();
+</script>
+
+<style>
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--text-xxs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .lang {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0 var(--space-1);
+    border-bottom: 1px solid transparent;
+    transition: color 150ms var(--ease-out), border-color 150ms var(--ease-out);
+  }
+
+  a.lang:hover,
+  a.lang:focus-visible {
+    color: var(--text-amber);
+    border-bottom-color: var(--accent-amber);
+    outline: none;
+  }
+
+  .lang-active {
+    color: var(--accent-amber);
+    font-weight: 700;
+  }
+
+  .lang-sep {
+    color: var(--border-strong);
+  }
+</style>

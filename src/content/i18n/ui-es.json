@@ -26,6 +26,8 @@
   "badge.stack": "ARMAMENTO",
   "badge.tenure": "PERIODO",
   "badge.current": "EN CURSO",
+  "badge.facility": "INSTALACION",
+  "badge.note": "NOTA",
   "hero.codename": "NOMBRE CLAVE",
   "hero.summary": "RESUMEN OPERATIVO",
   "contact.email": "CORREO SEGURO",

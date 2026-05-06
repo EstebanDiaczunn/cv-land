@@ -26,6 +26,8 @@
   "badge.stack": "ARMAMENT",
   "badge.tenure": "TENURE",
   "badge.current": "ACTIVE",
+  "badge.facility": "FACILITY",
+  "badge.note": "NOTE",
   "hero.codename": "CODENAME",
   "hero.summary": "OPERATIONAL BRIEF",
   "contact.email": "SECURE MAIL",

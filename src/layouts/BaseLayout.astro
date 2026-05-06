@@ -3,10 +3,13 @@ import "../styles/globals.css";
 import BootSequence from "../components/BootSequence.astro";
 import StatusHeader from "../components/StatusHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import type { Lang } from "../lib/i18n.ts";
 
 interface Props {
   title?: string;
   description?: string;
+  /** Page language. Drives <html lang>, hreflang, and the toggle. */
+  lang?: Lang;
   /** Set to false on pages that should not show the boot overlay (e.g. 404). */
   showBoot?: boolean;
 }
@@ -14,15 +17,25 @@ interface Props {
 const {
   title = "ESTEBAN DIACZUNN — CODENAME: NAIKI",
   description = "Backend Developer / Software Architect-in-training. Operative profile.",
+  lang = "es",
   showBoot = true,
 } = Astro.props;
 
 const siteUrl = import.meta.env.SITE;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+
+// Compute alternate-language URL for hreflang. Same logic as in StatusHeader —
+// mirror /  ↔  /en/. Keeping these in sync is fine for one component pair;
+// pull into a helper if it spreads further.
+const path = Astro.url.pathname;
+const esPath = path.replace(/^\/en/, "") || "/";
+const enPath = path.startsWith("/en") ? path : path === "/" ? "/en/" : `/en${path}`;
+const esURL = new URL(esPath, siteUrl);
+const enURL = new URL(enPath, siteUrl);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,18 +44,22 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <meta name="description" content={description} />
 
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="es" href={esURL} />
+    <link rel="alternate" hreflang="en" href={enURL} />
+    <link rel="alternate" hreflang="x-default" href={esURL} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === "es" ? "es_AR" : "en_US"} />
     <meta property="og:site_name" content="NAIKI — cv-land" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body class="bg-bg-void text-text-primary font-sans antialiased min-h-screen flex flex-col">
     {showBoot && <BootSequence />}
-    <StatusHeader />
+    <StatusHeader lang={lang} />
     <slot />
     <SiteFooter />
   </body>

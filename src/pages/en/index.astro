@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HomePage from "../../components/HomePage.astro";
+import type { Lang } from "../../lib/i18n.ts";
+
+const lang: Lang = "en";
+---
+
+<BaseLayout
+  lang={lang}
+  title="ESTEBAN DIACZUNN — CODENAME: NAIKI"
+  description="Backend Developer / Software Architect-in-training. Operative profile."
+>
+  <HomePage lang={lang} />
+</BaseLayout>
