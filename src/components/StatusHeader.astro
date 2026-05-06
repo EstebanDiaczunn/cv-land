@@ -13,6 +13,7 @@
 
 import LangToggle from "./LangToggle.astro";
 import type { Lang } from "../lib/i18n.ts";
+import { stripBase, withBase } from "../lib/paths.ts";
 
 interface Props {
   lang: Lang;
@@ -20,17 +21,17 @@ interface Props {
 
 const { lang } = Astro.props;
 
-// Mirror URL: /  ↔  /en/. Compute from current pathname so this scales if more
-// routes are added later. We only have a single page in Fase 3, but the logic
-// preserves any sub-path (`/foo/` ↔ `/en/foo/`).
-const path = Astro.url.pathname;
-let altHref: string;
+// Mirror URL: /  ↔  /en/. Trabajamos en coordenadas base-stripped y
+// re-aplicamos base al final. Sin base configurado, los helpers son no-op.
+const rel = stripBase(Astro.url.pathname);
+let altRel: string;
 if (lang === "es") {
-  altHref = path === "/" ? "/en/" : `/en${path}`;
+  altRel = rel === "/" ? "/en/" : `/en${rel}`;
 } else {
-  const stripped = path.replace(/^\/en/, "");
-  altHref = stripped || "/";
+  const stripped = rel.replace(/^\/en/, "");
+  altRel = stripped || "/";
 }
+const altHref = withBase(altRel);
 
 // Server-rendered placeholder so non-JS visitors still see a complete bar.
 const initial = new Date();

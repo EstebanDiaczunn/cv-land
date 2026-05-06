@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { BASE } from "../lib/paths.ts";
 
 // 404 is built once into dist/404.html and served by nginx for any unmatched
 // route (Fase 5 wires `error_page 404 /404.html;`). Because it's a single file,
@@ -44,18 +45,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </main>
 </BaseLayout>
 
-<script is:inline>
-  // Lang detection by pathname. Inline so it runs before paint and avoids
-  // a flash of the wrong language. CSP note for Fase 5: when adding strict
-  // script-src, hash this block (SHA-256) and add to the policy.
+<script is:inline define:vars={{ BASE }}>
+  // Lang detection by pathname. Inline so it runs before paint y evita
+  // un flash del idioma equivocado. BASE (/, /cv-land/, etc.) se inyecta
+  // a build time via define:vars para que el regex y el back href
+  // funcionen con o sin base path. CSP note Fase 5: al agregar script-src
+  // estricto, hashear este bloque (SHA-256) y meter el hash en la policy.
   (function () {
-    var isEn = /^\/en(\/|$)/.test(location.pathname);
+    var path = location.pathname;
+    var rel = path.indexOf(BASE) === 0 ? "/" + path.slice(BASE.length) : path;
+    var isEn = /^\/en(\/|$)/.test(rel);
     var lang = isEn ? "en" : "es";
     document.documentElement.lang = lang;
     var main = document.querySelector(".signal-lost");
     if (main) main.setAttribute("data-active-lang", lang);
     var back = document.querySelector("[data-back]");
-    if (back) back.setAttribute("href", isEn ? "/en/" : "/");
+    if (back) back.setAttribute("href", isEn ? BASE + "en/" : BASE);
   })();
 </script>
 
