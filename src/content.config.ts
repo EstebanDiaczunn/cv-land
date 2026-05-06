@@ -67,7 +67,7 @@ const projects = defineCollection({
 const skills = defineCollection({
   loader: glob({ pattern: "main.yaml", base: "./src/content/skills" }),
   schema: z.object({
-    pendingOwnerReview: z.boolean(),
+    pendingOwnerReview: z.boolean().default(false),
     categories: z.array(
       z.object({
         id: z.string(),
@@ -92,7 +92,7 @@ const education = defineCollection({
         institution: z.string(),
         degree: localized,
         field: localized.optional(),
-        startDate: z.string(),
+        startDate: z.string().nullable(),
         endDate: z.string().nullable(),
         status: z.enum(["COMPLETED", "IN_PROGRESS", "PAUSED"]),
         codename: z.string(),

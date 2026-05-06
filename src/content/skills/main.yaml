@@ -1,7 +1,6 @@
-# PENDIENTE REVISION DEL DUEÑO — los syncRate son estimaciones del agente SCRIBE
-# basadas en el CV del PDF (peso del rol, antigüedad, profundidad declarada).
-# El dueño confirma o ajusta antes de mergear el PR.
-pendingOwnerReview: true
+# Sync rates confirmados por el dueño. Si en algún momento querés volver
+# a marcar el set como "en revisión" y mostrar el disclaimer en la UI,
+# agregar `pendingOwnerReview: true` arriba de `categories:`.
 categories:
   - id: "languages-frameworks"
     label:
