@@ -1,0 +1,169 @@
+---
+/**
+ * BootSequence.astro
+ * Source of truth: docs/DESIGN_SYSTEM.md §3.2 + skills/nerv-style/SKILL.md (Core components — BootSequence)
+ *
+ * Full-screen overlay that simulates a NERV terminal boot. Auto-dismisses
+ * after ~4.2s; skippable with click or any key. Honors prefers-reduced-motion
+ * by collapsing to a 200ms fade.
+ *
+ * Markup is server-rendered so non-JS visitors see the boot text statically;
+ * the inline script removes the overlay on load if JS is available, and
+ * a CSS fallback fades it out so it never traps a no-JS user behind a black box.
+ */
+
+const bootHeader = "NERV SYSTEM BOOT v2.0";
+// Line cadence per DESIGN_SYSTEM §3.2 — base offsets in ms, 800ms apart.
+const bootLines = [
+  { text: "> Initializing neural interface...", delay: 600 },
+  { text: "> Loading operative profile... OK", delay: 1400 },
+  { text: "> Synchronization check... 92%",    delay: 2200 },
+  { text: "> Establishing secure channel... OK", delay: 3000 },
+];
+const skipHint = "[ PRESS ANY KEY TO SKIP ]";
+---
+
+<div
+  id="boot-sequence"
+  class="boot-sequence"
+  role="status"
+  aria-live="polite"
+  aria-label="NERV system boot in progress"
+>
+  <div class="boot-content">
+    <p class="boot-header">{bootHeader}</p>
+    <ol class="boot-lines">
+      {bootLines.map((line) => (
+        <li
+          class="boot-line"
+          style={`--line-delay:${line.delay}ms`}
+        >
+          <span>{line.text}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="boot-skip" aria-hidden="true">
+      <span class="boot-cursor">&#9608;</span>
+      <span>{skipHint}</span>
+    </p>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var overlay = document.getElementById("boot-sequence");
+    if (!overlay) return;
+
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Total visible time before auto-dismiss. Reduced-motion = immediate fade.
+    var visibleMs = reduced ? 200 : 4200;
+    var fadeMs = reduced ? 200 : 320;
+
+    if (reduced) overlay.classList.add("boot-reduced");
+
+    var dismissed = false;
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      overlay.classList.add("boot-out");
+      window.setTimeout(function () {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        document.body.classList.remove("boot-active");
+      }, fadeMs);
+    }
+
+    document.body.classList.add("boot-active");
+    window.setTimeout(dismiss, visibleMs);
+    window.addEventListener("keydown", dismiss, { once: true });
+    overlay.addEventListener("click", dismiss, { once: true });
+  })();
+</script>
+
+<style>
+  /* While boot is on screen, prevent the page from scrolling underneath. */
+  :global(body.boot-active) {
+    overflow: hidden;
+  }
+
+  .boot-sequence {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-boot);
+    background: var(--bg-void);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    cursor: pointer;
+    animation: nerv-fade-in var(--duration-medium) var(--ease-out) both;
+  }
+
+  .boot-sequence.boot-out {
+    animation: nerv-fade-out 320ms var(--ease-out) forwards;
+    pointer-events: none;
+  }
+
+  .boot-content {
+    width: 100%;
+    max-width: 56ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    letter-spacing: 0.02em;
+  }
+
+  .boot-header {
+    color: var(--accent-amber);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    margin: 0 0 var(--space-6);
+    opacity: 0;
+    animation: nerv-fade-in 200ms var(--ease-out) 200ms forwards;
+  }
+
+  .boot-lines {
+    list-style: none;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+  }
+
+  .boot-line {
+    color: var(--magi-green);
+    opacity: 0;
+    transform: translateY(4px);
+    animation: nerv-boot-line 240ms var(--ease-out) var(--line-delay) forwards;
+  }
+
+  .boot-skip {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    letter-spacing: 0.16em;
+    opacity: 0;
+    animation:
+      nerv-fade-in 200ms var(--ease-out) 3500ms forwards,
+      nerv-pulse 1.6s var(--ease-in-out) 3700ms infinite;
+    display: inline-flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .boot-cursor {
+    color: var(--accent-amber);
+    animation: nerv-cursor-blink 1s var(--ease-terminal) infinite;
+  }
+
+  /* Reduced motion: skip the staged reveal — show everything instantly,
+   * the script will fade the overlay out within 200ms anyway. */
+  .boot-sequence.boot-reduced .boot-header,
+  .boot-sequence.boot-reduced .boot-line,
+  .boot-sequence.boot-reduced .boot-skip {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .boot-sequence.boot-reduced .boot-cursor {
+    animation: none;
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+/**
+ * StatusHeader.astro
+ * Source of truth: docs/DESIGN_SYSTEM.md §4.2 + skills/nerv-style/SKILL.md (Core components — StatusHeader)
+ *
+ * Sticky top bar. Static chrome on the left ("NERV SYSTEMS · STATUS: ONLINE ·
+ * coordinates"), live JST timestamp on the right. Server-renders a placeholder
+ * timestamp; an inline script (~200B) updates it every second client-side.
+ *
+ * Coordinates are Tokyo (35.6762N 139.6503E) — atmospheric flavor, not real geo.
+ */
+
+// Server-rendered placeholder so non-JS visitors still see a complete bar.
+const initial = new Date();
+const initialFormatted = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Tokyo",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+})
+  .format(initial)
+  .replace(",", "");
+---
+
+<header class="status-header" role="banner">
+  <div class="status-left">
+    <span class="status-brand">NERV SYSTEMS</span>
+    <span class="status-sep" aria-hidden="true">·</span>
+    <span class="status-state">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>STATUS: ONLINE</span>
+    </span>
+    <span class="status-sep" aria-hidden="true">·</span>
+    <span class="status-coords">35.6762N 139.6503E</span>
+  </div>
+  <div class="status-right">
+    <span
+      id="status-clock"
+      class="status-clock"
+      aria-label="Current time in Tokyo"
+    >
+      {initialFormatted} JST
+    </span>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById("status-clock");
+    if (!el) return;
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+    } catch (e) {
+      return;
+    }
+    function tick() {
+      el.textContent = fmt.format(new Date()).replace(",", "") + " JST";
+    }
+    tick();
+    window.setInterval(tick, 1000);
+  })();
+</script>
+
+<style>
+  .status-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-2) clamp(var(--space-4), 4vw, var(--space-8));
+    height: 32px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: var(--text-xxs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .status-left,
+  .status-right {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .status-brand {
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .status-state {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--magi-green);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--magi-green);
+    box-shadow: 0 0 6px var(--magi-green);
+    animation: nerv-pulse 2s var(--ease-in-out) infinite;
+  }
+
+  .status-sep {
+    color: var(--border-strong);
+  }
+
+  .status-coords {
+    color: var(--text-muted);
+  }
+
+  .status-clock {
+    color: var(--text-amber);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* On narrow screens the coordinates are first to drop. */
+  @media (max-width: 640px) {
+    .status-coords,
+    .status-left .status-sep:nth-of-type(2) {
+      display: none;
+    }
+    .status-header {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+    }
+  }
+</style>
