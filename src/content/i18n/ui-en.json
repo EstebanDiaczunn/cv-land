@@ -41,5 +41,9 @@
   "education.kind.degree": "ACADEMIC DEGREE",
   "education.kind.certification": "FIELD CERTIFICATION",
   "boot.skip": "[ PRESS ANY KEY TO SKIP ]",
-  "common.present": "PRESENT"
+  "common.present": "PRESENT",
+  "badge.facility": "FACILITY",
+  "badge.note": "NOTE",
+  "skill.yearsShort": "YRS",
+  "lang.toggle.label": "LANGUAGE"
 }

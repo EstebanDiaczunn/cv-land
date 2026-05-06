@@ -3,26 +3,38 @@ import "../styles/globals.css";
 import BootSequence from "../components/BootSequence.astro";
 import StatusHeader from "../components/StatusHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import type { Lang } from "../lib/i18n.ts";
 
 interface Props {
   title?: string;
   description?: string;
   /** Set to false on pages that should not show the boot overlay (e.g. 404). */
   showBoot?: boolean;
+  lang?: Lang;
 }
+
+const defaultDescriptions: Record<Lang, string> = {
+  es: "Desarrollador Backend / Arquitecto de Software en formación. Perfil operativo.",
+  en: "Backend Developer / Software Architect-in-training. Operative profile.",
+};
 
 const {
   title = "ESTEBAN DIACZUNN — CODENAME: NAIKI",
-  description = "Backend Developer / Software Architect-in-training. Operative profile.",
+  lang = "es",
   showBoot = true,
 } = Astro.props;
 
-const siteUrl = import.meta.env.SITE;
+const description = Astro.props.description ?? defaultDescriptions[lang];
+
+const siteUrl = (import.meta.env.SITE as string | undefined) || "https://TODO_DOMAIN";
+const mirrorUrl = lang === "es" ? "/en/" : "/";
+const esUrl = `${siteUrl}/`;
+const enUrl = `${siteUrl}/en/`;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,6 +43,10 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
     <meta name="description" content={description} />
 
     <link rel="canonical" href={canonicalURL} />
+
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={esUrl} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -42,7 +58,7 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
   </head>
   <body class="bg-bg-void text-text-primary font-sans antialiased min-h-screen flex flex-col">
     {showBoot && <BootSequence />}
-    <StatusHeader />
+    <StatusHeader lang={lang} mirrorUrl={mirrorUrl} />
     <slot />
     <SiteFooter />
   </body>

@@ -1,0 +1,77 @@
+---
+import type { Lang } from "../lib/i18n.ts";
+
+interface Props {
+  lang: Lang;
+  mirrorUrl: string;
+}
+
+const { lang, mirrorUrl } = Astro.props;
+const targetLang: Lang = lang === "es" ? "en" : "es";
+const ariaLabel =
+  targetLang === "en" ? "Switch to English" : "Cambiar a español";
+---
+
+<a
+  href={mirrorUrl}
+  class="lang-toggle"
+  aria-label={ariaLabel}
+  data-target-lang={targetLang}
+>
+  <span class:list={["lt-opt", { "lt-active": lang === "es" }]}>ES</span>
+  <span class="lt-sep" aria-hidden="true">|</span>
+  <span class:list={["lt-opt", { "lt-active": lang === "en" }]}>EN</span>
+</a>
+
+<script>
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-target-lang]")
+    .forEach((el) => {
+      el.addEventListener("click", () => {
+        const targetLang = el.dataset.targetLang;
+        if (targetLang) {
+          try {
+            localStorage.setItem("cv-land:lang", targetLang);
+          } catch (_) {}
+        }
+      });
+    });
+</script>
+
+<style>
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xxs);
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: color 150ms var(--ease-out);
+  }
+
+  .lang-toggle:hover .lt-opt:not(.lt-active),
+  .lang-toggle:focus-visible .lt-opt:not(.lt-active) {
+    color: var(--accent-amber-glow);
+  }
+
+  .lang-toggle:focus-visible {
+    outline: 1px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
+
+  .lt-opt {
+    color: var(--text-muted);
+  }
+
+  .lt-active {
+    color: var(--accent-amber);
+    font-weight: 700;
+  }
+
+  .lt-sep {
+    color: var(--border-strong);
+    font-weight: 400;
+  }
+</style>

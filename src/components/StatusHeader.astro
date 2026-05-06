@@ -10,6 +10,16 @@
  * Coordinates are Tokyo (35.6762N 139.6503E) — atmospheric flavor, not real geo.
  */
 
+import LangToggle from "./LangToggle.astro";
+import type { Lang } from "../lib/i18n.ts";
+
+interface Props {
+  lang?: Lang;
+  mirrorUrl?: string;
+}
+
+const { lang = "es", mirrorUrl = "/en/" } = Astro.props;
+
 // Server-rendered placeholder so non-JS visitors still see a complete bar.
 const initial = new Date();
 const initialFormatted = new Intl.DateTimeFormat("en-CA", {
@@ -38,6 +48,8 @@ const initialFormatted = new Intl.DateTimeFormat("en-CA", {
     <span class="status-coords">35.6762N 139.6503E</span>
   </div>
   <div class="status-right">
+    <LangToggle lang={lang} mirrorUrl={mirrorUrl} />
+    <span class="status-sep" aria-hidden="true">·</span>
     <span
       id="status-clock"
       class="status-clock"

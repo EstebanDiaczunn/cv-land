@@ -41,5 +41,9 @@
   "education.kind.degree": "TITULO ACADEMICO",
   "education.kind.certification": "CERTIFICACION DE CAMPO",
   "boot.skip": "[ PRESIONA CUALQUIER TECLA PARA SALTAR ]",
-  "common.present": "PRESENTE"
+  "common.present": "PRESENTE",
+  "badge.facility": "INSTALACION",
+  "badge.note": "NOTA",
+  "skill.yearsShort": "AÑOS",
+  "lang.toggle.label": "IDIOMA"
 }
