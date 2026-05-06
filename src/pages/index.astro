@@ -3,7 +3,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import MagiPanel from "../components/MagiPanel.astro";
 import SyncBar from "../components/SyncBar.astro";
-import { useTranslations, formatDateRange, type Lang } from "../lib/i18n.ts";
+import { useTranslations, filterByLang, formatDateRange, type Lang } from "../lib/i18n.ts";
 
 const lang: Lang = "es";
 const t = useTranslations(lang);
@@ -20,11 +20,11 @@ const educationEntry = await getEntry("education", "main");
 if (!educationEntry) throw new Error("education/main.yaml is missing");
 const educationData = educationEntry.data;
 
-const experiences = (await getCollection("experience")).sort(
+const experiences = filterByLang(await getCollection("experience"), lang).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
-const projects = (await getCollection("projects")).sort(
+const projects = filterByLang(await getCollection("projects"), lang).sort(
   (a, b) => a.data.order - b.data.order,
 );
 

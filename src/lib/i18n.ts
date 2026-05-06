@@ -20,6 +20,17 @@ export function pickLocalized<T>(
   return value[lang];
 }
 
+// Filter content collection entries by `-es` / `-en` id suffix.
+// Body MDX lives in parallel files (qtech-es.md / qtech-en.md) — Astro 6's
+// glob loader strips dots from filenames when building the id, so a dash
+// separator keeps the suffix intact (`qtech-es`, `qtech-en`).
+export function filterByLang<T extends { id: string }>(
+  entries: T[],
+  lang: Lang
+): T[] {
+  return entries.filter((e) => e.id.endsWith(`-${lang}`));
+}
+
 const monthsEs = [
   "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
   "JUL", "AGO", "SEP", "OCT", "NOV", "DIC",
