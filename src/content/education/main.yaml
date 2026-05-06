@@ -1,5 +1,5 @@
 entries:
-  - institution: "TODO — pendiente confirmar institución"
+  - institution: "Instituto ISTEA"
     degree:
       es: "Tecnicatura en Programación"
       en: "Programming Technical Degree"
@@ -17,7 +17,7 @@ entries:
     field:
       es: "2 años cursados"
       en: "2 years completed"
-    startDate: "TODO"
+    startDate: "2020"
     endDate: null
     status: "IN_PROGRESS"
     codename: "TRAINING DOSSIER — SECONDARY"
@@ -28,8 +28,8 @@ entries:
     degree:
       es: "Bootcamp C# y .NET"
       en: "C# and .NET Bootcamp"
-    startDate: "TODO"
-    endDate: "TODO"
+    startDate: null
+    endDate: null
     status: "COMPLETED"
     codename: "FIELD CERTIFICATION — C# / .NET"
     kind: "CERTIFICATION"
@@ -39,8 +39,8 @@ entries:
     degree:
       es: "Python & Django"
       en: "Python & Django"
-    startDate: "TODO"
-    endDate: "TODO"
+    startDate: null
+    endDate: null
     status: "COMPLETED"
     codename: "FIELD CERTIFICATION — PYTHON / DJANGO"
     kind: "CERTIFICATION"
