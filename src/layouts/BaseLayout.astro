@@ -6,6 +6,7 @@ import SiteFooter from "../components/SiteFooter.astro";
 import HexGrid from "../components/HexGrid.astro";
 import ScanLines from "../components/ScanLines.astro";
 import type { Lang } from "../lib/i18n.ts";
+import { stripBase, withBase } from "../lib/paths.ts";
 
 interface Props {
   title?: string;
@@ -25,16 +26,17 @@ const {
 
 const siteUrl = import.meta.env.SITE;
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
-const ogImageURL = new URL("/og.png", siteUrl);
+const ogImageURL = new URL(withBase("/og.png"), siteUrl);
+const faviconHref = withBase("/favicon.svg");
 
-// Compute alternate-language URL for hreflang. Same logic as in StatusHeader —
-// mirror /  ↔  /en/. Keeping these in sync is fine for one component pair;
-// pull into a helper if it spreads further.
-const path = Astro.url.pathname;
-const esPath = path.replace(/^\/en/, "") || "/";
-const enPath = path.startsWith("/en") ? path : path === "/" ? "/en/" : `/en${path}`;
-const esURL = new URL(esPath, siteUrl);
-const enURL = new URL(enPath, siteUrl);
+// Compute alternate-language URL for hreflang. Trabajamos en coordenadas
+// base-stripped y re-aplicamos base al final. Sin base configurado, los
+// helpers son no-op.
+const rel = stripBase(Astro.url.pathname);
+const esRel = rel.replace(/^\/en/, "") || "/";
+const enRel = rel.startsWith("/en") ? rel : rel === "/" ? "/en/" : `/en${rel}`;
+const esURL = new URL(withBase(esRel), siteUrl);
+const enURL = new URL(withBase(enRel), siteUrl);
 ---
 
 <!doctype html>
@@ -70,7 +72,7 @@ const enURL = new URL(enPath, siteUrl);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={faviconHref} />
   </head>
   <body class="bg-bg-void text-text-primary font-sans antialiased min-h-screen flex flex-col">
     <HexGrid />
