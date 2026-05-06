@@ -579,6 +579,17 @@ function statusKey(status: string): string {
     padding: var(--space-5);
     display: grid;
     gap: var(--space-4);
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .project:hover,
+  .project:focus-within {
+    border-color: var(--accent-amber);
+    background: var(--bg-elevated);
+    transform: translateY(-1px);
   }
 
   .project-head {
@@ -646,6 +657,15 @@ function statusKey(status: string): string {
     padding: var(--space-5);
     display: grid;
     gap: var(--space-2);
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .edu:hover,
+  .edu:focus-within {
+    border-color: var(--accent-amber-soft);
+    background: var(--bg-elevated);
   }
 
   .edu-head {
@@ -762,6 +782,23 @@ function statusKey(status: string): string {
     }
     .edu-meta {
       grid-template-columns: 1fr;
+    }
+  }
+
+  /* Reduced motion: kill the lift + transitions, keep only color changes
+   * (those are non-motion). Hero animations also cancel out. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero,
+    .hero-codename {
+      animation: none;
+    }
+    .project,
+    .edu {
+      transition: none;
+    }
+    .project:hover,
+    .project:focus-within {
+      transform: none;
     }
   }
 </style>

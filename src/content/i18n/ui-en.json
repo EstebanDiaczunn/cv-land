@@ -37,6 +37,7 @@
   "footer.status": "STATUS: ONLINE",
   "footer.build": "BUILD",
   "footer.scanlines": "SCAN LINES",
+  "footer.scanlines.toggle": "TOGGLE SCAN LINES",
   "skill.syncrate": "SYNC RATE",
   "skill.years": "YEARS OF EXPERIENCE",
   "skill.pendingReview": "SYNC RATES PENDING OPERATIVE REVIEW",

@@ -37,6 +37,7 @@
   "footer.status": "ESTADO: EN LINEA",
   "footer.build": "BUILD",
   "footer.scanlines": "LINEAS DE SCAN",
+  "footer.scanlines.toggle": "ACTIVAR/DESACTIVAR LINEAS DE SCAN",
   "skill.syncrate": "TASA DE SINC.",
   "skill.years": "ANOS DE EXPERIENCIA",
   "skill.pendingReview": "TASAS DE SINCRONIZACION SUJETAS A REVISION DEL OPERATIVO",

@@ -30,6 +30,14 @@ const { unit, label, status, tone = "amber" } = Astro.props;
     border: 1px solid var(--border-subtle);
     background: var(--bg-panel);
     position: relative;
+    transition:
+      border-color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .magi:hover,
+  .magi:focus-within {
+    border-color: var(--accent-amber-soft);
   }
 
   .magi::before,
@@ -120,5 +128,11 @@ const { unit, label, status, tone = "amber" } = Astro.props;
 
   .magi-red .magi-unit {
     color: var(--alarm-red);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .magi {
+      transition: none;
+    }
   }
 </style>

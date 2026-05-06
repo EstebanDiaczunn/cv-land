@@ -1,10 +1,20 @@
 ---
 /**
  * SiteFooter.astro
- * Minimal Fase 1 footer per SPEC §8 / DESIGN_SYSTEM.md §4.2.
- * Build-hash and ScanLines toggle land in Fase 4 polish.
+ * SPEC §6.4 / DESIGN_SYSTEM.md §4.2: footer hosts the scan-lines toggle.
+ * The toggle button is plumbed by ScanLines.astro (which lives in the layout
+ * shell). We just render the button — state hydration + click handling is
+ * delegated. No JS in this file.
  */
 
+import { useTranslations, type Lang } from "../lib/i18n.ts";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
 const buildYear = new Date().getFullYear();
 ---
 
@@ -14,6 +24,18 @@ const buildYear = new Date().getFullYear();
       <span class="footer-dot" aria-hidden="true"></span>
       <span>END OF TRANSMISSION</span>
     </span>
+
+    <button
+      type="button"
+      id="scanlines-toggle"
+      class="footer-toggle"
+      aria-pressed="false"
+      aria-label={t("footer.scanlines.toggle")}
+    >
+      <span class="footer-toggle-led" aria-hidden="true"></span>
+      <span>{t("footer.scanlines")}</span>
+    </button>
+
     <span class="footer-meta">
       NERV / cv-land · {buildYear}
     </span>
@@ -58,5 +80,68 @@ const buildYear = new Date().getFullYear();
 
   .footer-meta {
     color: var(--text-muted);
+  }
+
+  /* Scan-lines toggle. Plain button, no rounding. The LED on the left
+   * mirrors aria-pressed: dim when off, glowing amber when on. */
+  .footer-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    padding: var(--space-1) var(--space-3);
+    cursor: pointer;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer-toggle-led {
+    width: 6px;
+    height: 6px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer-toggle:hover,
+  .footer-toggle:focus-visible {
+    color: var(--text-amber);
+    border-color: var(--accent-amber-soft);
+    background: rgba(255, 102, 0, 0.04);
+    outline: none;
+  }
+
+  .footer-toggle[aria-pressed="true"] {
+    color: var(--accent-amber);
+    border-color: var(--accent-amber);
+  }
+
+  .footer-toggle[aria-pressed="true"] .footer-toggle-led {
+    background: var(--accent-amber);
+    border-color: var(--accent-amber-glow);
+    box-shadow: 0 0 6px var(--accent-amber-glow);
+  }
+
+  /* Visible focus ring on the toggle without doubling the border highlight. */
+  .footer-toggle:focus-visible {
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-toggle,
+    .footer-toggle-led {
+      transition: none;
+    }
   }
 </style>

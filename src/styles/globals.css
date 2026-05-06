@@ -66,3 +66,18 @@
   outline-offset: 2px;
   border-radius: 0;
 }
+
+/* HexGrid sits at z-hex-grid (0) as a position:fixed layer. Lift in-flow
+ * content above it with z-content (1). Sticky/fixed chrome (StatusHeader,
+ * BootSequence, ScanLines) already carry their own z-index. */
+main,
+footer[role="contentinfo"] {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+/* The overscroll color matches the void so the hex-grid mask fade is
+ * indistinguishable from the page edge on iOS rubber-banding. */
+html {
+  background: var(--bg-void);
+}
