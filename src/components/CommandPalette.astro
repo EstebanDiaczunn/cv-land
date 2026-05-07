@@ -11,7 +11,7 @@ const sections = t.sections;
        class="pointer-events-none fixed left-1/2 top-[18vh] z-50 w-[min(560px,92vw)] -translate-x-1/2 scale-[0.98] rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)] opacity-0 shadow-2xl transition-all duration-150">
     <div class="flex items-center gap-2 border-b border-[var(--color-border)] px-3">
       <svg viewBox="0 0 16 16" class="h-3.5 w-3.5 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
-      <input id="cmdk-input" type="text" placeholder={t.cmd.placeholder} autocomplete="off" spellcheck="false"
+      <input id="cmdk-input" type="text" placeholder={t.cmd.placeholder} aria-label={t.cmd.placeholder} autocomplete="off" spellcheck="false"
              class="h-11 flex-1 bg-transparent font-mono text-[13px] text-[var(--color-text)] outline-none placeholder:text-[var(--color-text-muted)]" />
       <kbd class="rounded border border-[var(--color-border)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-text-muted)]">ESC</kbd>
     </div>

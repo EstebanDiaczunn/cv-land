@@ -23,7 +23,7 @@ const isCurrent = end.toLowerCase().includes('actualidad') || end.toLowerCase().
     <div class="flex flex-wrap items-center gap-2">
       <h3 class="text-[14.5px] font-semibold text-[var(--color-text)]">{company}</h3>
       {remote && <Pill variant="success">{t.chips.remote}</Pill>}
-      {isCurrent && <span class="inline-flex h-1.5 w-1.5 items-center"><span class="pulse-dot"></span></span>}
+      {isCurrent && <span class="inline-flex h-1.5 w-1.5 items-center" aria-hidden="true"><span class="pulse-dot"></span></span>}
     </div>
     <span class="font-mono text-[11px] tabular-nums text-[var(--color-text-muted)]">{period}</span>
   </div>
