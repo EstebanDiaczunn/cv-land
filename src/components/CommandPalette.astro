@@ -1,0 +1,140 @@
+---
+import { ui, type Locale } from '../lib/i18n';
+interface Props { locale: Locale; altPath: string }
+const { locale, altPath } = Astro.props;
+const t = ui[locale];
+const sections = t.sections;
+---
+<div class="no-print">
+  <div id="cmdk-overlay" class="pointer-events-none fixed inset-0 z-40 bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-150"></div>
+  <div id="cmdk" role="dialog" aria-modal="true" aria-label="Command menu"
+       class="pointer-events-none fixed left-1/2 top-[18vh] z-50 w-[min(560px,92vw)] -translate-x-1/2 scale-[0.98] rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elev)] opacity-0 shadow-2xl transition-all duration-150">
+    <div class="flex items-center gap-2 border-b border-[var(--color-border)] px-3">
+      <svg viewBox="0 0 16 16" class="h-3.5 w-3.5 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
+      <input id="cmdk-input" type="text" placeholder={t.cmd.placeholder} autocomplete="off" spellcheck="false"
+             class="h-11 flex-1 bg-transparent font-mono text-[13px] text-[var(--color-text)] outline-none placeholder:text-[var(--color-text-muted)]" />
+      <kbd class="rounded border border-[var(--color-border)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-text-muted)]">ESC</kbd>
+    </div>
+    <ul id="cmdk-list" class="max-h-[60vh] overflow-y-auto p-2 font-mono text-[12.5px]"
+        data-alt-path={altPath}
+        data-labels={JSON.stringify({
+          empty: t.cmd.empty,
+          groups: t.cmd.groups,
+          copyEmail: t.cmd.copyEmail,
+          downloadCv: t.cmd.downloadCv,
+          switchLang: t.cmd.switchLang,
+          print: t.cmd.print,
+          goto: { about: t.cmd.goto(sections.about), experience: t.cmd.goto(sections.experience), education: t.cmd.goto(sections.education), skills: t.cmd.goto(sections.skills), languages: t.cmd.goto(sections.languages) }
+        })}></ul>
+  </div>
+
+  <button id="cmdk-trigger" type="button"
+          class="fixed bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elev)]/90 px-3 py-1.5 font-mono text-[11px] text-[var(--color-text-muted)] backdrop-blur transition hover:text-[var(--color-text-dim)]">
+    <kbd class="mr-1 rounded border border-[var(--color-border)] px-1 py-px text-[10px]">⌘</kbd>
+    <kbd class="mr-2 rounded border border-[var(--color-border)] px-1 py-px text-[10px]">K</kbd>
+    {t.cmd.hint}
+  </button>
+</div>
+
+<script>
+type Item = { id: string; label: string; group: string; run: () => void };
+
+function init() {
+  const root = document.getElementById('cmdk') as HTMLElement | null;
+  const overlay = document.getElementById('cmdk-overlay') as HTMLElement | null;
+  const trigger = document.getElementById('cmdk-trigger') as HTMLButtonElement | null;
+  const input = document.getElementById('cmdk-input') as HTMLInputElement | null;
+  const list = document.getElementById('cmdk-list') as HTMLUListElement | null;
+  if (!root || !overlay || !input || !list) return;
+
+  const labels = JSON.parse(list.dataset.labels || '{}');
+  const altPath = list.dataset.altPath || '/';
+
+  const goto = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const items: Item[] = [
+    { id: 'about', label: labels.goto.about, group: labels.groups.nav, run: () => goto('about') },
+    { id: 'experience', label: labels.goto.experience, group: labels.groups.nav, run: () => goto('experience') },
+    { id: 'education', label: labels.goto.education, group: labels.groups.nav, run: () => goto('education') },
+    { id: 'skills', label: labels.goto.skills, group: labels.groups.nav, run: () => goto('skills') },
+    { id: 'languages', label: labels.goto.languages, group: labels.groups.nav, run: () => goto('languages') },
+    { id: 'copy-email', label: labels.copyEmail, group: labels.groups.actions, run: async () => { await navigator.clipboard.writeText('estebandiaczun@gmail.com'); } },
+    { id: 'cv', label: labels.downloadCv, group: labels.groups.actions, run: () => window.open('/Esteban_N_Diaczun.pdf', '_blank') },
+    { id: 'print', label: labels.print, group: labels.groups.actions, run: () => window.print() },
+    { id: 'lang', label: labels.switchLang, group: labels.groups.lang, run: () => { window.location.href = altPath; } },
+  ];
+
+  let active = 0;
+  let filtered = items;
+
+  function render() {
+    if (filtered.length === 0) {
+      list.innerHTML = `<li class="px-3 py-6 text-center text-[var(--color-text-muted)]">${labels.empty}</li>`;
+      return;
+    }
+    const grouped: Record<string, Item[]> = {};
+    filtered.forEach((it) => { (grouped[it.group] ||= []).push(it); });
+    let html = '';
+    let idx = 0;
+    Object.entries(grouped).forEach(([g, arr]) => {
+      html += `<li class="px-2 pb-1 pt-2 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">${g}</li>`;
+      arr.forEach((it) => {
+        const isActive = idx === active;
+        html += `<li><button type="button" data-idx="${idx}" class="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left ${isActive ? 'bg-white/[0.06] text-[var(--color-text)]' : 'text-[var(--color-text-dim)] hover:bg-white/[0.03]'}">${it.label}<span class="font-mono text-[10px] text-[var(--color-text-muted)]">↵</span></button></li>`;
+        idx++;
+      });
+    });
+    list.innerHTML = html;
+    list.querySelectorAll('button[data-idx]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const i = Number((btn as HTMLElement).dataset.idx);
+        filtered[i]?.run();
+        close();
+      });
+    });
+  }
+
+  function open() {
+    root.classList.remove('pointer-events-none', 'opacity-0', 'scale-[0.98]');
+    overlay.classList.remove('pointer-events-none', 'opacity-0');
+    overlay.classList.add('opacity-100');
+    setTimeout(() => input.focus(), 30);
+    active = 0; filtered = items; input.value = ''; render();
+  }
+  function close() {
+    root.classList.add('pointer-events-none', 'opacity-0', 'scale-[0.98]');
+    overlay.classList.add('pointer-events-none', 'opacity-0');
+    overlay.classList.remove('opacity-100');
+  }
+
+  trigger?.addEventListener('click', open);
+  overlay.addEventListener('click', close);
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    filtered = q ? items.filter((it) => it.label.toLowerCase().includes(q)) : items;
+    active = 0; render();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const isOpen = !root.classList.contains('opacity-0');
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault(); isOpen ? close() : open(); return;
+    }
+    if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault(); isOpen ? close() : open(); return;
+    }
+    if (!isOpen) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, filtered.length - 1); render(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); render(); }
+    if (e.key === 'Enter') { e.preventDefault(); filtered[active]?.run(); close(); }
+  });
+}
+
+init();
+document.addEventListener('astro:page-load', init);
+</script>

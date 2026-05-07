@@ -1,85 +1,32 @@
 ---
-import "../styles/globals.css";
-import BootSequence from "../components/BootSequence.astro";
-import StatusHeader from "../components/StatusHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import HexGrid from "../components/HexGrid.astro";
-import ScanLines from "../components/ScanLines.astro";
-import type { Lang } from "../lib/i18n.ts";
-import { stripBase, withBase } from "../lib/paths.ts";
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { type Locale } from '../lib/i18n';
 
 interface Props {
-  title?: string;
-  description?: string;
-  /** Page language. Drives <html lang>, hreflang, and the toggle. */
-  lang?: Lang;
-  /** Set to false on pages that should not show the boot overlay (e.g. 404). */
-  showBoot?: boolean;
+  title: string;
+  description: string;
+  locale: Locale;
 }
-
-const {
-  title = "ESTEBAN DIACZUNN — CODENAME: NAIKI",
-  description = "Backend Developer / Software Architect-in-training. Operative profile.",
-  lang = "es",
-  showBoot = true,
-} = Astro.props;
-
-const siteUrl = import.meta.env.SITE;
-const canonicalURL = new URL(Astro.url.pathname, siteUrl);
-const ogImageURL = new URL(withBase("/og.png"), siteUrl);
-const faviconHref = withBase("/favicon.svg");
-
-// Compute alternate-language URL for hreflang. Trabajamos en coordenadas
-// base-stripped y re-aplicamos base al final. Sin base configurado, los
-// helpers son no-op.
-const rel = stripBase(Astro.url.pathname);
-const esRel = rel.replace(/^\/en/, "") || "/";
-const enRel = rel.startsWith("/en") ? rel : rel === "/" ? "/en/" : `/en${rel}`;
-const esURL = new URL(withBase(esRel), siteUrl);
-const enURL = new URL(withBase(enRel), siteUrl);
+const { title, description, locale } = Astro.props;
 ---
-
 <!doctype html>
-<html lang={lang}>
+<html lang={locale}>
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="color-scheme" content="dark" />
     <title>{title}</title>
     <meta name="description" content={description} />
-
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="alternate" hreflang="es" href={esURL} />
-    <link rel="alternate" hreflang="en" href={enURL} />
-    <link rel="alternate" hreflang="x-default" href={esURL} />
-
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta name="color-scheme" content="dark" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content={lang === "es" ? "es_AR" : "en_US"} />
-    <meta property="og:site_name" content="NAIKI — cv-land" />
-    <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={title} />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageURL} />
-
-    <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <meta property="og:type" content="profile" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <ClientRouter />
   </head>
-  <body class="bg-bg-void text-text-primary font-sans antialiased min-h-screen flex flex-col">
-    <HexGrid />
-    {showBoot && <BootSequence />}
-    <StatusHeader lang={lang} />
-    <slot />
-    <SiteFooter lang={lang} />
-    <ScanLines />
+  <body class="grain antialiased">
+    <main class="mx-auto w-full max-w-[640px] px-5 py-12 md:py-16">
+      <slot />
+    </main>
   </body>
 </html>

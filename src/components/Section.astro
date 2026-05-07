@@ -1,0 +1,16 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  delay?: number;
+}
+const { id, title, delay = 0 } = Astro.props;
+---
+<section id={id} class="anim-fade-up scroll-mt-12" style={`animation-delay:${delay}ms`}>
+  <h2 class="mb-4 text-[15px] font-semibold tracking-tight text-[var(--color-text)]">
+    {title}
+  </h2>
+  <div class="font-mono-tight text-[var(--color-text-dim)]">
+    <slot />
+  </div>
+</section>

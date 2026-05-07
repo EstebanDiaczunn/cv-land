@@ -1,0 +1,29 @@
+{
+  "locale": "es",
+  "groups": [
+    {
+      "title": "Lenguajes y Frameworks",
+      "items": ["PHP", "Laravel", "JavaScript", "TypeScript", "Node.js", "NestJS", "Express", "Python", "Django", "FastAPI", "C#", ".NET", "Go"]
+    },
+    {
+      "title": "Bases de Datos",
+      "items": ["SQL Server", "T-SQL", "MySQL", "PostgreSQL", "MongoDB", "Redis"]
+    },
+    {
+      "title": "IA y Automatización",
+      "items": ["Anthropic Claude", "OpenAI", "Tool calling", "Twilio", "WhatsApp bots"]
+    },
+    {
+      "title": "Mensajería y Asincronía",
+      "items": ["RabbitMQ", "Event-driven", "WebSockets", "Procesamiento asíncrono"]
+    },
+    {
+      "title": "DevOps y Herramientas",
+      "items": ["Docker", "Git", "GitHub", "GitLab", "Bitbucket", "AWS EC2", "AWS S3", "AWS RDS", "DynamoDB", "Azure"]
+    },
+    {
+      "title": "Arquitectura y Patrones",
+      "items": ["Clean Code", "SOLID", "DDD", "Repository-Service-Controller", "APIs REST", "Arquitectura escalable"]
+    }
+  ]
+}

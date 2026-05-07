@@ -1,60 +1,97 @@
-import esStrings from "../content/i18n/ui-es.json";
-import enStrings from "../content/i18n/ui-en.json";
+export const locales = ['es', 'en'] as const;
+export type Locale = (typeof locales)[number];
 
-export type Lang = "es" | "en";
+export const defaultLocale: Locale = 'es';
 
-const dictionaries = {
-  es: esStrings as Record<string, string>,
-  en: enStrings as Record<string, string>,
+export const ui = {
+  es: {
+    sections: {
+      about: 'Sobre mí',
+      experience: 'Experiencia',
+      education: 'Educación',
+      skills: 'Habilidades',
+      languages: 'Idiomas',
+    },
+    chips: {
+      remote: 'Remoto',
+      present: 'Actualidad',
+    },
+    contact: {
+      email: 'Email',
+      phone: 'Teléfono',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      cv: 'CV',
+      lang: 'EN',
+    },
+    cmd: {
+      hint: 'para abrir el menú',
+      placeholder: 'Buscar acciones…',
+      empty: 'Sin resultados',
+      groups: { nav: 'Navegar', actions: 'Acciones', lang: 'Idioma' },
+      goto: (s: string) => `Ir a ${s}`,
+      copyEmail: 'Copiar email',
+      downloadCv: 'Descargar CV (PDF)',
+      switchLang: 'Cambiar a English',
+      print: 'Imprimir',
+    },
+    hero: {
+      role: 'Backend Developer',
+      location: 'Buenos Aires, Argentina · UTC-3',
+    },
+  },
+  en: {
+    sections: {
+      about: 'About',
+      experience: 'Experience',
+      education: 'Education',
+      skills: 'Skills',
+      languages: 'Languages',
+    },
+    chips: {
+      remote: 'Remote',
+      present: 'Present',
+    },
+    contact: {
+      email: 'Email',
+      phone: 'Phone',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      cv: 'CV',
+      lang: 'ES',
+    },
+    cmd: {
+      hint: 'to open the command menu',
+      placeholder: 'Search actions…',
+      empty: 'No results',
+      groups: { nav: 'Navigate', actions: 'Actions', lang: 'Language' },
+      goto: (s: string) => `Go to ${s}`,
+      copyEmail: 'Copy email',
+      downloadCv: 'Download CV (PDF)',
+      switchLang: 'Switch to Spanish',
+      print: 'Print',
+    },
+    hero: {
+      role: 'Backend Developer',
+      location: 'Buenos Aires, Argentina · UTC-3',
+    },
+  },
+} as const;
+
+export const profile = {
+  name: 'Esteban Nicolás Diaczun',
+  email: 'estebandiaczun@gmail.com',
+  github: 'https://github.com/estebandiaczunn',
+  linkedin: 'https://www.linkedin.com/in/esteban-diaczun',
+  cv: '/Esteban_N_Diaczun.pdf',
+  avatar: '/avatar.svg',
 };
 
-export function useTranslations(lang: Lang) {
-  const dict = dictionaries[lang];
-  return (key: string): string => dict[key] ?? key;
+export function getLocaleFromPath(pathname: string): Locale {
+  return pathname.startsWith('/en') ? 'en' : 'es';
 }
 
-export function pickLocalized<T>(
-  value: { es: T; en: T },
-  lang: Lang
-): T {
-  return value[lang];
-}
-
-// Filter content collection entries by `-es` / `-en` id suffix.
-// Body MDX lives in parallel files (qtech-es.md / qtech-en.md) — Astro 6's
-// glob loader strips dots from filenames when building the id, so a dash
-// separator keeps the suffix intact (`qtech-es`, `qtech-en`).
-export function filterByLang<T extends { id: string }>(
-  entries: T[],
-  lang: Lang
-): T[] {
-  return entries.filter((e) => e.id.endsWith(`-${lang}`));
-}
-
-const monthsEs = [
-  "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
-  "JUL", "AGO", "SEP", "OCT", "NOV", "DIC",
-];
-const monthsEn = [
-  "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
-  "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
-];
-
-export function formatDate(iso: string | null, lang: Lang): string {
-  if (!iso) return lang === "es" ? "PRESENTE" : "PRESENT";
-  if (iso === "TODO") return "TODO";
-  const [year, month] = iso.split("-");
-  if (!month) return year;
-  const idx = parseInt(month, 10) - 1;
-  if (Number.isNaN(idx) || idx < 0 || idx > 11) return iso;
-  const months = lang === "es" ? monthsEs : monthsEn;
-  return `${months[idx]} ${year}`;
-}
-
-export function formatDateRange(
-  start: string,
-  end: string | null,
-  lang: Lang
-): string {
-  return `${formatDate(start, lang)} → ${formatDate(end, lang)}`;
+export function altLocalePath(pathname: string, current: Locale): string {
+  if (current === 'es') return '/en';
+  return pathname.replace(/^\/en\/?/, '/') || '/';
 }

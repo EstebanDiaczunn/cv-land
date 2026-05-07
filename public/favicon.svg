@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <!-- NERV-style monogram. Outer flat-top hexagon (AT field), inner amber
-       hexagon, and an angular "N" stroke that doubles as the half-leaf cleft
-       of the NERV fig-leaf logo. Pure SVG, no fill on the bg cell so it
-       picks up the user agent / browser dark theme correctly. -->
-  <rect width="32" height="32" fill="#0a0a0a"/>
-  <polygon points="16,3 28,10 28,22 16,29 4,22 4,10"
-           fill="none" stroke="#ff6600" stroke-width="1.5" stroke-linejoin="miter"/>
-  <polygon points="16,8 23.5,12.5 23.5,19.5 16,24 8.5,19.5 8.5,12.5"
-           fill="none" stroke="#ff6600" stroke-width="0.9" opacity="0.45"/>
-  <!-- Angular N glyph: left vertical, diagonal, right vertical. -->
-  <path d="M11 11 L11 21 M11 11 L21 21 M21 11 L21 21"
-        fill="none" stroke="#ff6600" stroke-width="1.6"
-        stroke-linecap="square" stroke-linejoin="miter"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#0b0b0d"/><text x="16" y="22" font-family="ui-monospace,Menlo,monospace" font-size="18" font-weight="600" text-anchor="middle" fill="#ededf0">e</text></svg>

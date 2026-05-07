@@ -1,0 +1,19 @@
+---
+interface Props {
+  variant?: 'default' | 'subtle' | 'success';
+  as?: 'span' | 'a';
+  href?: string;
+}
+const { variant = 'default', as = 'span', href } = Astro.props;
+const Tag = as;
+const base =
+  'inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 font-mono text-[11px] leading-5 tracking-tight transition-colors';
+const variants = {
+  default: 'bg-[var(--color-bg-chip)] text-[var(--color-text-dim)] border border-[var(--color-border)] hover:bg-[var(--color-bg-chip-hover)]',
+  subtle: 'bg-transparent text-[var(--color-text-muted)] border border-[var(--color-border)]',
+  success: 'bg-transparent text-[var(--color-success)] border border-[color-mix(in_srgb,var(--color-success)_30%,transparent)]',
+};
+---
+<Tag class={`${base} ${variants[variant]}`} href={href}>
+  <slot />
+</Tag>
