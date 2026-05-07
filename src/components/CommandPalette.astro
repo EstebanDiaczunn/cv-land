@@ -29,9 +29,9 @@ const sections = t.sections;
   </div>
 
   <button id="cmdk-trigger" type="button"
-          class="fixed bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elev)]/90 px-3 py-1.5 font-mono text-[11px] text-[var(--color-text-muted)] backdrop-blur transition hover:text-[var(--color-text-dim)]">
-    <kbd class="mr-1 rounded border border-[var(--color-border)] px-1 py-px text-[10px]">⌘</kbd>
-    <kbd class="mr-2 rounded border border-[var(--color-border)] px-1 py-px text-[10px]">K</kbd>
+          class="group fixed bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elev)]/85 px-3 py-1.5 font-mono text-[11px] text-[var(--color-text-muted)] shadow-lg shadow-black/30 backdrop-blur-md transition-all hover:-translate-y-[calc(50%+2px)] hover:translate-x-[-50%] hover:border-[var(--color-border-strong)] hover:text-[var(--color-text-dim)]">
+    <kbd class="mr-1 rounded border border-[var(--color-border)] bg-[var(--color-bg-chip)]/60 px-1 py-px text-[10px] transition-colors group-hover:border-[var(--color-border-strong)]">⌘</kbd>
+    <kbd class="mr-2 rounded border border-[var(--color-border)] bg-[var(--color-bg-chip)]/60 px-1 py-px text-[10px] transition-colors group-hover:border-[var(--color-border-strong)]">K</kbd>
     {t.cmd.hint}
   </button>
 </div>

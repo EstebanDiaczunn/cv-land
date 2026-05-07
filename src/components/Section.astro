@@ -2,14 +2,23 @@
 interface Props {
   id: string;
   title: string;
+  index?: string;
   delay?: number;
 }
-const { id, title, delay = 0 } = Astro.props;
+const { id, title, index, delay = 0 } = Astro.props;
 ---
 <section id={id} class="anim-fade-up scroll-mt-12" style={`animation-delay:${delay}ms`}>
-  <h2 class="mb-4 text-[15px] font-semibold tracking-tight text-[var(--color-text)]">
-    {title}
-  </h2>
+  <header class="mb-4 flex items-baseline gap-3">
+    {index && (
+      <span class="font-mono text-[10px] tabular-nums tracking-[0.18em] text-[var(--color-text-muted)]">
+        {index}
+      </span>
+    )}
+    <h2 class="text-[15px] font-semibold tracking-tight text-[var(--color-text)]">
+      {title}
+    </h2>
+    <span class="h-px flex-1 translate-y-[-2px] bg-[var(--color-border)]"></span>
+  </header>
   <div class="font-mono-tight text-[var(--color-text-dim)]">
     <slot />
   </div>

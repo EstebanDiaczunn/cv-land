@@ -32,13 +32,13 @@ const languages = await getEntry('languages', 'en');
 
   <hr />
 
-  <Section id="about" title={t.sections.about} delay={60}>
+  <Section id="about" title={t.sections.about} index="01" delay={60}>
     <AboutContent />
   </Section>
 
   <hr />
 
-  <Section id="experience" title={t.sections.experience} delay={120}>
+  <Section id="experience" title={t.sections.experience} index="02" delay={120}>
     <div class="space-y-2">
       {experiences.map(async (e) => {
         const { Content } = await render(e);
@@ -61,7 +61,7 @@ const languages = await getEntry('languages', 'en');
 
   <hr />
 
-  <Section id="education" title={t.sections.education} delay={180}>
+  <Section id="education" title={t.sections.education} index="03" delay={180}>
     <ul class="space-y-3">
       {educations.map(async (ed) => {
         const { Content } = await render(ed);
@@ -81,7 +81,7 @@ const languages = await getEntry('languages', 'en');
 
   <hr />
 
-  <Section id="skills" title={t.sections.skills} delay={240}>
+  <Section id="skills" title={t.sections.skills} index="04" delay={240}>
     <div class="space-y-3">
       {skills!.data.groups.map((g) => (
         <div>
@@ -96,7 +96,7 @@ const languages = await getEntry('languages', 'en');
 
   <hr />
 
-  <Section id="languages" title={t.sections.languages} delay={300}>
+  <Section id="languages" title={t.sections.languages} index="05" delay={300}>
     <div class="flex flex-wrap gap-1.5">
       {languages!.data.items.map((l) => (
         <Pill>

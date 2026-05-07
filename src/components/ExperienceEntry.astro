@@ -14,17 +14,21 @@ interface Props {
 const { locale, company, role, remote, start, end, stack = [] } = Astro.props;
 const t = ui[locale];
 const period = `${start} — ${end}`;
+const isCurrent = end.toLowerCase().includes('actualidad') || end.toLowerCase().includes('present');
 ---
-<article class="group relative -mx-3 rounded-lg px-3 py-3 transition-colors hover:bg-white/[0.02]">
+<article class="group relative -mx-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-white/[0.025]">
+  <span class="absolute left-0 top-3 bottom-3 w-px bg-transparent transition-colors duration-200 group-hover:bg-[var(--color-border-strong)]" aria-hidden="true"></span>
+
   <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-    <div class="flex items-center gap-2">
-      <h3 class="text-[14px] font-semibold text-[var(--color-text)]">{company}</h3>
+    <div class="flex flex-wrap items-center gap-2">
+      <h3 class="text-[14.5px] font-semibold text-[var(--color-text)]">{company}</h3>
       {remote && <Pill variant="success">{t.chips.remote}</Pill>}
+      {isCurrent && <span class="inline-flex h-1.5 w-1.5 items-center"><span class="pulse-dot"></span></span>}
     </div>
-    <span class="font-mono text-[11px] text-[var(--color-text-muted)]">{period}</span>
+    <span class="font-mono text-[11px] tabular-nums text-[var(--color-text-muted)]">{period}</span>
   </div>
-  <p class="mt-0.5 font-mono text-[12px] text-[var(--color-text-dim)]">{role}</p>
-  <div class="mt-2 font-mono-tight text-[var(--color-text-dim)] [&_ul]:list-none [&_ul]:space-y-1.5 [&_li]:relative [&_li]:pl-4 [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.6em] [&_li]:before:h-px [&_li]:before:w-2 [&_li]:before:bg-[var(--color-border-strong)]">
+  <p class="mt-1 font-mono text-[12px] text-[var(--color-text-dim)]">{role}</p>
+  <div class="mt-2.5 font-mono-tight text-[var(--color-text-dim)] [&_ul]:list-none [&_ul]:space-y-1.5 [&_li]:relative [&_li]:pl-4 [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.62em] [&_li]:before:h-px [&_li]:before:w-2 [&_li]:before:bg-[var(--color-border-strong)] [&_li]:transition-colors group-hover:[&_li]:before:bg-[var(--color-text-muted)]">
     <slot />
   </div>
   {stack.length > 0 && (
