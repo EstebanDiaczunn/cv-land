@@ -15,5 +15,4 @@ stack:
   - XUnit
 ---
 
-- APIs REST con .NET 6, C#, Entity Framework, PostgreSQL.
-- Arquitectura MVC, testing con XUnit, frontend en Angular.
+- APIs REST con .NET 6, C#, Entity Framework, PostgreSQL. Arquitectura MVC, testing con XUNIT, frontend Angular.

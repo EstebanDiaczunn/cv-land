@@ -14,8 +14,8 @@
       "items": ["Anthropic Claude", "OpenAI", "Tool calling", "Twilio", "WhatsApp bots"]
     },
     {
-      "title": "Mensajería y Asincronía",
-      "items": ["RabbitMQ", "Event-driven", "WebSockets", "Procesamiento asíncrono"]
+      "title": "Message Brokers y Asincronía",
+      "items": ["RabbitMQ", "Arquitectura orientada a eventos", "WebSockets", "Procesamiento asíncrono"]
     },
     {
       "title": "DevOps y Herramientas",
@@ -23,7 +23,7 @@
     },
     {
       "title": "Arquitectura y Patrones",
-      "items": ["Clean Code", "SOLID", "DDD", "Repository-Service-Controller", "APIs REST", "Arquitectura escalable"]
+      "items": ["Clean Code", "SOLID", "Domain Driven Design", "Repository-Service-Controller", "Arquitectura escalable", "APIs"]
     }
   ]
 }

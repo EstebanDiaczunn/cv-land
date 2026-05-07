@@ -15,5 +15,4 @@ stack:
   - Scrum
 ---
 
-- Web scraping for a pharmaceutical platform using FastAPI, Selenium WebDriver, and AWS (S3, RDS).
-- Scrum methodology.
+- Web scraping for a pharmaceutical platform with FastAPI, Selenium WebDriver, AWS (S3, RDS). Scrum.
