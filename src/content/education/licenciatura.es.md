@@ -6,4 +6,4 @@ period: 2 años cursados
 order: 2
 ---
 
-Certificaciones complementarias: Bootcamp C# y .NET (OpenBootcamp), Python & Django (Coderhouse).
+Certificaciones: Bootcamp C# y .NET (OpenBootcamp), Python & Django (Coderhouse).

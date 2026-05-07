@@ -6,4 +6,4 @@ period: 2 years completed
 order: 2
 ---
 
-Additional certifications: C# and .NET Bootcamp (OpenBootcamp), Python & Django (Coderhouse).
+Certifications: C# and .NET Bootcamp (OpenBootcamp), Python & Django (Coderhouse).
